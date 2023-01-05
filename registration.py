@@ -33,8 +33,7 @@ def checking_only_username(username):
 
 def checking_username(username):
     """
-    Checks that username contains only contains alphabets and "_".
-    Also checks if the username already exists in the table or not
+    checks if the username already exists in the table or not
     """
     if checking_only_username(username):
         try:
