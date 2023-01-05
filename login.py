@@ -37,6 +37,9 @@ def checking_login_details(username, pin):
 
 
 def list_bank_details(username):
+    """
+    Returns the list of tuples containing information like username, account_number, mobile number, CVV and card type
+    """
     query1 = f'''
             SELECT username, account_number, mobile_no, card_cvv, card_type
             FROM users JOIN cards
@@ -49,6 +52,9 @@ def list_bank_details(username):
 
 
 def list_card_cvvs(username):
+    """
+    Returns the list of all card CVVs owned by user.
+    """
     query1 = f'''
         SELECT card_cvv
         FROM users JOIN cards

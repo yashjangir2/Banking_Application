@@ -21,6 +21,8 @@ Run main.py file from the code base to start the application.
 For adding some sample accounts into the database run random_test_accounts() function in creatingDB file after running main.py file once. 
 
 ## About Code
+ ER diagram
+ 
 
 Contains 7 files in total
 
@@ -52,6 +54,9 @@ Contains 7 files in total
      - **insert_balance_info(user_id, account_number, mpin)** :- Initialize the account with zero balance and inserts the information in balance table.
      - **registering_user()** :- Takes all user information from registration_form() function. Insert the information into respective tables using the insert functions mentioned above. Also display user account information from bank_info database once the data is successfully uploaded in the database.
 - #### login.py
-     - ****
+     - **checking_login_details(username, pin)** :- Checks the login credentials entered are correct or not.
+     - **list_bank_details(username)** :- Returns the list of tuples containing information like username, account_number, mobile number, CVV and card type.
+     - **list_card_cvvs(username)** :- Returns the list of all card CVVs owned by user.
+     - **display_details(username)** :- 
     
     
