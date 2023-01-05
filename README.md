@@ -55,6 +55,16 @@ Contains 7 files in total
      - **checking_login_details(username, pin)** :- Checks the login credentials entered are correct or not.
      - **list_bank_details(username)** :- Returns the list of tuples containing information like username, account_number, mobile number, CVV and card type.
      - **list_card_cvvs(username)** :- Returns the list of all card CVVs owned by user.
-     - **display_details(username)** :- 
+     - **display_details(username)** :-  Prints the user information corresponding to the username provided. Prints list of cards, list of beneficiaries, current balance, and username.
+     - **update_details(username)** :- Update user's address, city, state and mobile number. Also checks validation of new entries provided by user.
+     - **change_pin(username)** :- changes pin of the card. Also checks validation of the new pin entered by user.
+     - **add_credit_card(username)** :- Takes input for the pin of new card generated and checks its validation. Adds a new credit in the database for the user using *add_new_credit_card(username, pin)* function from *updateDetails.py*.
+     - **add_beneficiary_2(username)** :-  Checks validation of name and account number of the beneficiary. Also checks if the beneficiary is present in the database or not. After all validations insert the beneficiary into beneficiary table using add_beneficiary()
+    function in beneficiary file.
+     - **transfer_money(username)** :- Transfer money to another account using take_user_information(username) function from transferFunds.py.
+     - **change_mpin(username)** :- Takes current mPIN and new mPIN from user and checks their validation and changes the mPIN and updates in the database.
+     - **login_functions(username)** :- Asks user to which action to perform by taking input after he/she logs in.
+     - **login_menu()** :- Takes username and mPIN from users to log in into the account if all information provided are correct. Also checks the validation of information entered.
+- #### updateDetails.py
     
     
