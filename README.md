@@ -4,10 +4,11 @@
 This is a Banking Application created using python and mySQL.
 
 ## Table of contents
-1. [prerequesites](#prerequisites)
+1. [Prerequesites](#prerequisites)
 2. [Installations](#installations)
 3. [Usage](#usage)
 4. [About Code](#about-code)
+     4.1. [creatingDB.py](####creatingDB.py)
 
 ## prerequisites
 1. python >= 3.8.2
