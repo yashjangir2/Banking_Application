@@ -4,18 +4,18 @@
 This is a Banking Application created using python and mySQL.
 
 ## Table of contents
-1. [Prerequesites](#prerequisites)
-2. [Installations](#installations)
-3. [Usage](#usage)
-4. [About Code](#about-code)
+- [Prerequesites](#prerequisites)
+- [Installations](#installations)
+- [Usage](#usage)
+- [About Code](#about-code)
 
-     - [creatingDB.py](#creatingDBpy)
-     - [main.py](#mainpy)
-     - [registration.py](#registrationpy)
-     - [login.py](#loginpy)
-     - [updateDetails.py](#updateDetailspy)
-     - [beneficiary.py](#beneficiarypy)
-     - [transferFunds.py](#transferFundspy)
+   - [creatingDB.py](#creatingDBpy)
+   - [main.py](#mainpy)
+   - [registration.py](#registrationpy)
+   - [login.py](#loginpy)
+   - [updateDetails.py](#updateDetailspy)
+   - [beneficiary.py](#beneficiarypy)
+   - [transferFunds.py](#transferFundspy)
 
 ## prerequisites
 1. python >= 3.8.2
