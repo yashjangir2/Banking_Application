@@ -21,8 +21,6 @@ Run main.py file from the code base to start the application.
 For adding some sample accounts into the database run random_test_accounts() function in creatingDB file after running main.py file once. 
 
 ## About Code
- ER diagram
- 
 
 Contains 7 files in total
 
