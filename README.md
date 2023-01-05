@@ -22,7 +22,9 @@ For adding some sample accounts into the database run random_test_accounts() fun
 
 ## About Code
 
-Contains 7 files in total
+Contains 7 main files in total.
+
+Description of functions and files are given below: 
 
 - #### main.py
     
@@ -62,9 +64,16 @@ Contains 7 files in total
      - **add_beneficiary_2(username)** :-  Checks validation of name and account number of the beneficiary. Also checks if the beneficiary is present in the database or not. After all validations insert the beneficiary into beneficiary table using add_beneficiary()
     function in beneficiary file.
      - **transfer_money(username)** :- Transfer money to another account using take_user_information(username) function from transferFunds.py.
-     - **change_mpin(username)** :- Takes current mPIN and new mPIN from user and checks their validation and changes the mPIN and updates in the database.
+     - **change_mpin(username)** :- Takes current mPIN and new mPIN from user and checks their validation and changes the mPIN and updates in the database using change_mpin(username, new_mpin) function in updateDetails.py.
      - **login_functions(username)** :- Asks user to which action to perform by taking input after he/she logs in.
      - **login_menu()** :- Takes username and mPIN from users to log in into the account if all information provided are correct. Also checks the validation of information entered.
 - #### updateDetails.py
-     - **get_user_id(username)**:- 
+     - **get_user_id(username)**:- Returns user id of the user with the given username.
+     - **update_address(username, new_address)**:- Updates the address of the username provided.
+     - **update_city(username, new_city)** :-  Updates the city of the username provided
+     - **update_state(username, new_state)** :- Updates the state of the username provided
+     - **update_mobile_no(username, new_mobile_no)** :-  Updates the mobile number of the username provided
+     - **change_pin(username, cvv, pin, new_pin)** :-  Changes the pin of the card user provided. Also checks validation of new_pin.
+     - **add_new_credit_card(username, pin)** :- Adds new credit card for the user in the database.
+     - **change_mpin(username, new_mpin)** :- changes mPIN and updates in the database.
     
