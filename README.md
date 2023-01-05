@@ -13,7 +13,10 @@ pip3 install mysql-connector-python
 ```
 
 ## Usage
-Run main.py file from the code base.
+Before starting the application connect to your mySQL server in every file.
+In creatingDB.py file please connect to server in creating_all_tables() and random_test_accounts() functions to connect to the database once it is created.
+
+Run main.py file from the code base to start the application.
 
 For adding some sample accounts into the database run random_test_accounts() function in creatingDB file after running main.py file once. 
 
@@ -43,6 +46,10 @@ Contains 7 files in total
      - **registration_form()** :- Takes user input for registration and checks their validation using above functions. Returns dictionary of user information if all the information are valid.
      - **generating_account_number()** :- Generates a 12 digit numeric account number. Returns account number in string format.
      - **generating_cards()** :- Generate a card's valid CVV and PIN. Returns a list containing CVV and pin.
-     - **insert_user_info(name, username, address, city, state, aadhaar, mobile_no, account_number)** :- 
+     - **insert_user_info(name, username, address, city, state, aadhaar, mobile_no, account_number)** :- Insert the user information into users table in the database.
+     - **insert_debit_card_info(user_id, card_cvv, card_pin)** :- Insert the debit card information into cards table in the database.
+     - **insert_credit_card_info(user_id, card_cvv, card_pin)** :- Insert the credit card information into cards table in the database.
+     - **insert_balance_info(user_id, account_number, mpin)** :- Initialize the account with zero balance and inserts the information in balance table.
+     - **registering_user()** :- Takes all user information from registration_form() function. Insert the information into respective tables using the insert functions mentioned above. Also display user account information from bank_info database once the data is successfully uploaded in the database.
     
     
