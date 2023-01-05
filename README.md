@@ -26,16 +26,16 @@ Contains 7 main files in total.
 
 Description of functions and files are given below: 
 
-- ### creatingDB.py
+- #### creatingDB.py
     This file creates the database once we run the application.
   - ***creating_all_tables()*** :- Creates all the tables required in the database.
   - ***random_test_accounts()*** :- Adds some test entries in the database.
-- ### main.py
+- #### main.py
     
   - ***home_page()*** :- Start of the application. User will be asked to login, register or exit.
                            Also closes all the mySQL servers once user exit the application.
   
-- ### registration.py
+- #### registration.py
      - ***checking_name(name)*** :- Takes name of the user as input and checks the validation of name. Name should contain only alphabets and length of name should be less than 100 characters.
      - ***checking_only_username(username)*** :- Checks the validation of the username provided by user i.e., checks that it contains only alphabets and "_" and length is less than 150 characters.
      - ***checking_username(username)*** :- Checks if the username given is already present in the table or not.
@@ -57,7 +57,7 @@ Description of functions and files are given below:
      - ***insert_credit_card_info(user_id, card_cvv, card_pin)*** :- Insert the credit card information into cards table in the database.
      - ***insert_balance_info(user_id, account_number, mpin)*** :- Initialize the account with zero balance and inserts the information in balance table.
      - ***registering_user()*** :- Takes all user information from registration_form() function. Insert the information into respective tables using the insert functions mentioned above. Also display user account information from bank_info database once the data is successfully uploaded in the database.
-- ### login.py
+- #### login.py
      - ***checking_login_details(username, pin)*** :- Checks the login credentials entered are correct or not.
      - ***list_bank_details(username)*** :- Returns the list of tuples containing information like username, account_number, mobile number, CVV and card type.
      - ***list_card_cvvs(username)*** :- Returns the list of all card CVVs owned by user.
@@ -71,7 +71,7 @@ Description of functions and files are given below:
      - ***change_mpin(username)*** :- Takes current mPIN and new mPIN from user and checks their validation and changes the mPIN and updates in the database using change_mpin(username, new_mpin) function in updateDetails.py.
      - ***login_functions(username)*** :- Asks user to which action to perform by taking input after he/she logs in.
      - ***login_menu()*** :- Takes username and mPIN from users to log in into the account if all information provided are correct. Also checks the validation of information entered.
-- ### updateDetails.py
+- #### updateDetails.py
      - ***get_user_id(username)***:- Returns user id of the user with the given username.
      - ***update_address(username, new_address)***:- Updates the address of the username provided.
      - ***update_city(username, new_city)*** :-  Updates the city of the username provided
@@ -80,12 +80,12 @@ Description of functions and files are given below:
      - ***change_pin(username, cvv, pin, new_pin)*** :-  Changes the pin of the card user provided. Also checks validation of new_pin.
      - ***add_new_credit_card(username, pin)*** :- Adds new credit card for the user in the database.
      - ***change_mpin(username, new_mpin)*** :- changes mPIN and updates in the database.
-- ### beneficiary.py
+- #### beneficiary.py
      - ***checks_beneficiary_and_account_no(b_name, b_account_number)*** :- Checks beneficiary name and account number if they are present in the database or not.
      - ***add_beneficiary(username, name, b_account_number)*** :- Adds beneficiary to the beneficiary table.
      - ***list_beneficiaries(username)*** :- Returns the list of beneficiaries containing beneficiary name and account number.
      - ***print_beneficiaries(username)*** :- Prints the details of all beneficiaries.
-- ### transferFunds.py
+- #### transferFunds.py
  
      - ***get_user_id_from_acc_no(account_number)***:-  Return user id of the account number given.
      - ***get_acc_no_from_user_id(user_id)*** :- Return account number using user id.
