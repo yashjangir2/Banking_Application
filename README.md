@@ -51,5 +51,7 @@ Contains 7 files in total
      - **insert_credit_card_info(user_id, card_cvv, card_pin)** :- Insert the credit card information into cards table in the database.
      - **insert_balance_info(user_id, account_number, mpin)** :- Initialize the account with zero balance and inserts the information in balance table.
      - **registering_user()** :- Takes all user information from registration_form() function. Insert the information into respective tables using the insert functions mentioned above. Also display user account information from bank_info database once the data is successfully uploaded in the database.
+- #### login.py
+     - ****
     
     
