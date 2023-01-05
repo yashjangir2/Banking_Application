@@ -77,5 +77,8 @@ Description of functions and files are given below:
      - **add_new_credit_card(username, pin)** :- Adds new credit card for the user in the database.
      - **change_mpin(username, new_mpin)** :- changes mPIN and updates in the database.
 - #### beneficiary.py
-     - **checks_beneficiary_and_account_no(b_name, b_account_number)** :- 
+     - **checks_beneficiary_and_account_no(b_name, b_account_number)** :- Checks beneficiary name and account number if they are present in the database or not.
+     - **add_beneficiary(username, name, b_account_number)** :- Adds beneficiary to the beneficiary table.
+     - **list_beneficiaries(username)** :- Returns the list of beneficiaries containing beneficiary name and account number.
+     - **print_beneficiaries(username)** :- Prints the details of all beneficiaries.
     
