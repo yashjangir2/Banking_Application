@@ -66,5 +66,5 @@ Contains 7 files in total
      - **login_functions(username)** :- Asks user to which action to perform by taking input after he/she logs in.
      - **login_menu()** :- Takes username and mPIN from users to log in into the account if all information provided are correct. Also checks the validation of information entered.
 - #### updateDetails.py
-    
+     - **get_user_id(username)**:- 
     
