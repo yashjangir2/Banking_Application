@@ -7,7 +7,7 @@ This is a Banking Application created using python and mySQL.
 1. python >= 3.8.2
 2. mySQL >= 8.0.0
 
-## install
+## installations
 ```bash
 pip3 install mysql-connector-python
 ```
