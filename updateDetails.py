@@ -11,23 +11,6 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 
-def checks_username(username):
-    """
-    Checks if the user with the username exists or not
-    :return: True if exists else False
-    """
-    user_id_q = f'''
-        SELECT id
-        FROM users
-        WHERE username = "{username}"
-    '''
-    mycursor.execute(user_id_q)
-    user_id = mycursor.fetchone()
-    if len(user_id) == 0:
-        return False
-    return True
-
-
 def get_user_id(username):
     """
     Returns user id of the user with the given username
@@ -113,7 +96,7 @@ def add_new_credit_card(username, pin):
     """
     Adds new credit card for the user in the database
     """
-    if checks_username(username):
+    if registration.checking_username(username):
         user_id = get_user_id(username)
         new_card_details = registration.generating_cards()
 
