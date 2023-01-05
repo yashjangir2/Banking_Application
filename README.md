@@ -76,4 +76,6 @@ Description of functions and files are given below:
      - **change_pin(username, cvv, pin, new_pin)** :-  Changes the pin of the card user provided. Also checks validation of new_pin.
      - **add_new_credit_card(username, pin)** :- Adds new credit card for the user in the database.
      - **change_mpin(username, new_mpin)** :- changes mPIN and updates in the database.
+- #### beneficiary.py
+     - **checks_beneficiary_and_account_no(b_name, b_account_number)** :- 
     
