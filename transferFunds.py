@@ -201,6 +201,28 @@ def take_user_information(username):
                 print("Please enter a valid account number")
                 b_account_number = input("Please enter beneficiary account number: ")
 
+            while not beneficiary.checks_beneficiary_and_account_no(b_name, b_account_number):
+                print("Invalid name and account number")
+                b_name = input("Please enter the name of beneficiary: ")
+                while not registration.checking_name(b_name):
+                    print("Please enter a valid name")
+                    b_name = input("Please enter the name of beneficiary: ")
+
+                b_account_number = input("Please enter beneficiary account number: ")
+                while not registration.checks_account_number(b_account_number):
+                    print("Please enter a valid account number")
+                    b_account_number = input("Please enter beneficiary account number: ")
+
+            print("Press 1 to add this account as beneficiary else press 0")
+            t = input("Key: ")
+            while not t.isnumeric() or int(t) > 1 or int(t) < 0:
+                print("Invalid Key!!!")
+                t = input("Key: ")
+
+            if int(t) == 1:
+                beneficiary.add_beneficiary(username, b_name, b_account_number)
+                print("Beneficiary Added")
+
             amount = input("Please enter the amount: ")
             while not amount.isnumeric():
                 print("Please enter a valid amount")
@@ -251,15 +273,37 @@ def take_user_information(username):
             print("Please enter a valid account number")
             b_account_number = input("Please enter beneficiary account number: ")
 
+        while not beneficiary.checks_beneficiary_and_account_no(b_name, b_account_number):
+            print("Invalid name and account number")
+            b_name = input("Please enter the name of beneficiary: ")
+            while not registration.checking_name(b_name):
+                print("Please enter a valid name")
+                b_name = input("Please enter the name of beneficiary: ")
+
+            b_account_number = input("Please enter beneficiary account number: ")
+            while not registration.checks_account_number(b_account_number):
+                print("Please enter a valid account number")
+                b_account_number = input("Please enter beneficiary account number: ")
+
+        print("Press 1 to add this account as beneficiary else press 0")
+        t = input("Key: ")
+        while not t.isnumeric() or int(t) > 1 or int(t) < 0:
+            print("Invalid Key!!!")
+            t = input("Key: ")
+
+        if int(t) == 1:
+            beneficiary.add_beneficiary(username, b_name, b_account_number)
+            print("Beneficiary Added")
+
         amount = input("Please enter the amount: ")
         while not amount.isnumeric():
             print("Please enter a valid amount")
             amount = input("Please enter the amount: ")
 
-        m_pin = input("Please enter you mPIN: ")
+        m_pin = getpass("Please enter you mPIN: ")
         while not registration.check_mpin(m_pin):
             print("Please enter a valid mPIN")
-            m_pin = input("Please enter you mPIN: ")
+            m_pin = getpass("Please enter you mPIN: ")
 
         if authenticate_user(user_id, m_pin):
             transfer_money(username, account_number, b_name, b_account_number, amount)
