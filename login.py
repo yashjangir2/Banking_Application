@@ -45,7 +45,8 @@ def list_bank_details(username):
     query1 = f'''
             SELECT username, account_number, mobile_no, 
                     CAST(AES_DECRYPT(card_cvv, 'pass') AS CHAR) AS card_cvv, 
-                    CAST(AES_DECRYPT(card_pin, 'pass') AS CHAR) AS card_pin
+                    CAST(AES_DECRYPT(card_pin, 'pass') AS CHAR) AS card_pin,
+                    card_type
             FROM users JOIN cards
             ON users.id = cards.user_id
             WHERE username = "{username}"
@@ -328,6 +329,9 @@ def change_mpin(username):
 
 
 def transaction_details(username):
+    """
+    Displays the transaction details of user
+    """
     user_id = updateDetails.get_user_id(username)
     query = f'''
         SELECT beneficiary_name, beneficiary_account_number, amount, timestamp 
@@ -350,7 +354,47 @@ def transaction_details(username):
 
 
 def cards_details(username):
-    pass
+    """
+    Displays card information owned by user
+    Asks for debit card pin from user to display card details and checks its validations
+    """
+    pin = input("Please enter pin of your debit card: ")
+    while not registration.checks_valid_pin(pin):
+        print("Please enter a valid pin")
+        pin = input("Please enter pin of your debit card: ")
+
+    user_id = updateDetails.get_user_id(username)
+
+    query = f'''
+        SELECT CAST(AES_DECRYPT(card_cvv, 'pass') AS CHAR)
+        FROM cards
+        WHERE user_id = {user_id} AND card_type = 'debit'
+    '''
+    mycursor.execute(query)
+    result = mycursor.fetchone()
+    mydb.commit()
+
+    if registration.checks_pin(username, result[0], pin):
+        info = list_bank_details(username)
+        print("Your Card Details are as follows: ")
+        for i in info:
+            print(f"{i[-1]} Card CVV: {i[-3]}")
+
+        t = input("\nPress 0 to exit: ")
+        while not t.isnumeric() or int(t) != 0:
+            print("Please enter a valid key")
+            t = input("\nPress 0 to exit: ")
+
+        login_functions(username)
+    else:
+        print("Invalid PIN")
+
+        t = input("\nPress 0 to exit: ")
+        while not t.isnumeric() or int(t) != 0:
+            print("Please enter a valid key")
+            t = input("\nPress 0 to exit: ")
+
+        login_functions(username)
 
 
 def login_functions(username):

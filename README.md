@@ -84,6 +84,7 @@ Description of functions and files are given below:
      - ***transfer_money(username)*** :- Transfer money to another account using take_user_information(username) function from transferFunds.py.
      - ***change_mpin(username)*** :- Takes current mPIN and new mPIN from user and checks their validation and changes the mPIN and updates in the database using change_mpin(username, new_mpin) function in updateDetails.py.
      - ***transaction_details(username)*** :- Displays transaction details of the user.
+     - ***cards_details(username)*** :- Displays card information owned by user. Asks for debit card pin from user to display card details and checks its validations.
      - ***login_functions(username)*** :- Asks user to which action to perform by taking input after he/she logs in.
      - ***login_menu()*** :- Takes username and mPIN from users to log in into the account if all information provided are correct. Also checks the validation of information entered.
 - #### updateDetails.py

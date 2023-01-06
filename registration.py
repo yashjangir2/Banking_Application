@@ -210,6 +210,16 @@ def registration_form():
         print("Please enter a valid 6 digit numeric mPIN")
         mpin = getpass("Please set a 6 digit mPIN for your account: ")
 
+    pin_debit_card = getpass("Please set a 4 digit PIN for your debit card: ")
+    while not checks_valid_pin(pin_debit_card):
+        print("Please enter a valid 4 digit numeric pin.")
+        pin_debit_card = getpass("Please set a 4 digit PIN for your debit card: ")
+
+    pin_credit_card = getpass("Please set a 4 digit PIN for your credit card: ")
+    while not checks_valid_pin(pin_credit_card):
+        print("Please enter a valid 4 digit numeric pin.")
+        pin_credit_card = getpass("Please set a 4 digit PIN for your credit card: ")
+
     return {'name': name,
             'username': username,
             'address': address,
@@ -217,7 +227,9 @@ def registration_form():
             'state': state,
             'aadhaar': aadhaar,
             'mobile_no': mobile_no,
-            'mpin': mpin}
+            'mpin': mpin,
+            'debit_card_pin': pin_debit_card,
+            'credit_card_pin': pin_credit_card}
 
 
 def generating_account_number():
@@ -315,15 +327,15 @@ def registering_user():
     aadhaar = user_info['aadhaar']
     mobile_no = user_info['mobile_no']
     mpin = user_info['mpin']
+    debit_card_pin = user_info['debit_card_pin']
+    credit_card_pin = user_info['credit_card_pin']
 
     account_number = generating_account_number()
     credit_card_info = generating_cards()
     credit_card_cvv = credit_card_info[0]
-    credit_card_pin = credit_card_info[1]
 
     debit_card_info = generating_cards()
     debit_card_cvv = debit_card_info[0]
-    debit_card_pin = debit_card_info[1]
 
     insert_user_info(name, username, address, city, state, aadhaar, mobile_no, account_number)
 
