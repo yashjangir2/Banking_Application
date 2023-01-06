@@ -20,7 +20,7 @@ mycursor = mydb.cursor()
 #     )
 # '''
 
-mycursor.execute('select * from users')
+mycursor.execute('SELECT * FROM users')
 result = mycursor.fetchall()
 for i in result:
   print(i)

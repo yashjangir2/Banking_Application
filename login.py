@@ -31,6 +31,7 @@ def checking_login_details(username, pin):
     '''
     mycursor.execute(cq_card_cvv)
     result = mycursor.fetchone()
+    mydb.commit()
 
     # if any login detail is incorrect value of result will be 'None'
     if not result:
@@ -221,6 +222,16 @@ def add_credit_card(username):
         print("Please enter a valid 4 digit numeric pin")
         pin = getpass("Please enter the pin of your card: ")
 
+    confirm_pin = getpass("Please confirm the pin of your new credit card: ")
+    while not confirm_pin != pin:
+        print("PIN didn't match!!!")
+        pin = getpass("Please Enter the pin of your new credit card: ")
+        while not registration.checks_valid_pin(pin):
+            print("Please enter a valid 4 digit numeric pin")
+            pin = getpass("Please enter the pin of your card: ")
+
+        confirm_pin = getpass("Please confirm the pin of your new credit card: ")
+
     cvv = updateDetails.add_new_credit_card(username, pin)
     print("New credit card added")
     print(f"CVV of your new credit is {cvv}")
@@ -358,10 +369,10 @@ def cards_details(username):
     Displays card information owned by user
     Asks for debit card pin from user to display card details and checks its validations
     """
-    pin = input("Please enter pin of your debit card: ")
+    pin = getpass("Please enter pin of your debit card: ")
     while not registration.checks_valid_pin(pin):
         print("Please enter a valid pin")
-        pin = input("Please enter pin of your debit card: ")
+        pin = getpass("Please enter pin of your debit card: ")
 
     user_id = updateDetails.get_user_id(username)
 
