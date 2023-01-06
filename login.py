@@ -223,7 +223,7 @@ def add_credit_card(username):
         pin = getpass("Please enter the pin of your card: ")
 
     confirm_pin = getpass("Please confirm the pin of your new credit card: ")
-    while not confirm_pin != pin:
+    while confirm_pin != pin:
         print("PIN didn't match!!!")
         pin = getpass("Please Enter the pin of your new credit card: ")
         while not registration.checks_valid_pin(pin):
