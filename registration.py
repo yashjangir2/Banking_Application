@@ -209,16 +209,39 @@ def registration_form():
     while not check_mpin(mpin):
         print("Please enter a valid 6 digit numeric mPIN")
         mpin = getpass("Please set a 6 digit mPIN for your account: ")
+    confirm_mpin = getpass("Please confirm your mPIN: ")
+    while confirm_mpin != mpin:
+        print("PINs don't match")
+        mpin = getpass("Please set a 6 digit mPIN for your account: ")
+        while not check_mpin(mpin):
+            print("Please enter a valid 6 digit numeric mPIN")
+            mpin = getpass("Please set a 6 digit mPIN for your account: ")
+        confirm_mpin = getpass("Please confirm your mPIN: ")
 
     pin_debit_card = getpass("Please set a 4 digit PIN for your debit card: ")
     while not checks_valid_pin(pin_debit_card):
         print("Please enter a valid 4 digit numeric pin.")
         pin_debit_card = getpass("Please set a 4 digit PIN for your debit card: ")
+    confirm_d_pin = getpass("Please confirm your PIN: ")
+    while confirm_d_pin != pin_debit_card:
+        print("PINs don't match")
+        pin_debit_card = getpass("Please set a 4 digit PIN for your debit card: ")
+        while not checks_valid_pin(pin_debit_card):
+            print("Please enter a valid 4 digit numeric pin.")
+            pin_debit_card = getpass("Please set a 4 digit PIN for your debit card: ")
+        confirm_d_pin = getpass("Please confirm your PIN: ")
 
     pin_credit_card = getpass("Please set a 4 digit PIN for your credit card: ")
     while not checks_valid_pin(pin_credit_card):
         print("Please enter a valid 4 digit numeric pin.")
         pin_credit_card = getpass("Please set a 4 digit PIN for your credit card: ")
+    confirm_c_pin = getpass("Please confirm your PIN: ")
+    while confirm_c_pin != pin_credit_card:
+        print("PINs don't match")
+        pin_credit_card = getpass("Please set a 4 digit PIN for your credit card: ")
+        while not checks_valid_pin(pin_credit_card):
+            print("Please enter a valid 4 digit numeric pin.")
+            pin_credit_card = getpass("Please set a 4 digit PIN for your credit card: ")
 
     return {'name': name,
             'username': username,
