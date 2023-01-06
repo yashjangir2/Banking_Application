@@ -169,47 +169,48 @@ def change_pin(username):
     Also checks validation of the new pin entered by user.
     """
     print("You chose to change your pin")
-    t = 1
-    while t == 1:
+    cvv = getpass("Please enter the cvv of the card whose Pin you want to change: ")
+    while not registration.checks_cvv(cvv):
+        print("Wrong CVV!!")
+        cvv = getpass("Please enter the cvv of the card whose Pin you want to change: ")
+
+    while cvv not in list_card_cvvs(username):
+        print("No such card!!")
         cvv = getpass("Please enter the cvv of the card whose Pin you want to change: ")
         while not registration.checks_cvv(cvv):
             print("Wrong CVV!!")
             cvv = getpass("Please enter the cvv of the card whose Pin you want to change: ")
 
-        while cvv not in list_card_cvvs(username):
-            print("No such card!!")
-            cvv = getpass("Please enter the cvv of the card whose Pin you want to change: ")
-            while not registration.checks_cvv(cvv):
-                print("Wrong CVV!!")
-                cvv = getpass("Please enter the cvv of the card whose Pin you want to change: ")
-
+    pin = getpass("Please enter the pin of your card: ")
+    while not registration.checks_valid_pin(pin):
+        print("Please enter a valid 4 digit numeric pin")
+        pin = getpass("Please enter the pin of your card: ")
+    while not registration.checks_pin(username, cvv, pin):
+        print("Wrong pin!!")
         pin = getpass("Please enter the pin of your card: ")
         while not registration.checks_valid_pin(pin):
             print("Please enter a valid 4 digit numeric pin")
             pin = getpass("Please enter the pin of your card: ")
-        while not registration.checks_pin(username, cvv, pin):
-            print("Wrong pin!!")
-            pin = getpass("Please enter the pin of your card: ")
-            while not registration.checks_valid_pin(pin):
-                print("Please enter a valid 4 digit numeric pin")
-                pin = getpass("Please enter the pin of your card: ")
 
+    new_pin1 = getpass("Please enter new 4 digit pin: ")
+    while not registration.checks_valid_pin(new_pin1):
+        print("Please enter a valid 4 digit pin")
+        new_pin1 = getpass("Please enter new 4 digit pin: ")
+    confirm_pin = getpass("Please re-enter your new pin: ")
+    while confirm_pin != new_pin1:
+        print("Pin didn't match!!")
         new_pin1 = getpass("Please enter new 4 digit pin: ")
         while not registration.checks_valid_pin(new_pin1):
             print("Please enter a valid 4 digit pin")
             new_pin1 = getpass("Please enter new 4 digit pin: ")
         confirm_pin = getpass("Please re-enter your new pin: ")
-        while confirm_pin != new_pin1:
-            print("Pin didn't match!!")
-            new_pin1 = getpass("Please enter new 4 digit pin: ")
-            while not registration.checks_valid_pin(new_pin1):
-                print("Please enter a valid 4 digit pin")
-                new_pin1 = getpass("Please enter new 4 digit pin: ")
-            confirm_pin = getpass("Please re-enter your new pin: ")
-        if new_pin1 == confirm_pin:
-            updateDetails.change_pin(username, cvv, pin, new_pin1)
-            print("PIN changed!!")
-        t = int(input("To exit please enter 0 or to change pin of other card enter 1: "))
+    if new_pin1 == confirm_pin:
+        updateDetails.change_pin(username, cvv, pin, new_pin1)
+        print("PIN changed!!")
+    t = input("To exit please enter 0: ")
+    while not t.isnumeric() or int(t) != 0:
+        print("Please enter a valid key")
+        t = input("To exit please enter 0: ")
 
     login_functions(username)
 
@@ -231,9 +232,8 @@ def add_credit_card(username):
 
         confirm_pin = getpass("Please confirm the pin of your new credit card: ")
 
-    cvv = updateDetails.add_new_credit_card(username, pin)
+    updateDetails.add_new_credit_card(username, pin)
     print("New credit card added")
-    print(f"CVV of your new credit is {cvv}")
 
     t = input("Press 0 to exit: ")
     while not t.isnumeric() or len(t) != 1 or t != '0':
