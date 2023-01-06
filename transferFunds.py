@@ -1,5 +1,6 @@
 import mysql.connector
 
+import beneficiary
 import registration
 import updateDetails
 from datetime import datetime
@@ -29,8 +30,8 @@ def get_user_id_from_acc_no(account_number):
 
 def get_acc_no_from_user_id(user_id):
     """
-        Return account number of the user
-        """
+    Return account number of the user
+    """
     query = f'''
         SELECT account_number
         FROM users
@@ -109,6 +110,7 @@ def transfer_money(username, account_number, b_name, b_account_number, amount):
             t2 = update_balance_for_beneficiary(b_account_number, amount)
             if t2:
                 print("Transaction Successful")
+                print(f"{amount} has been debited from your account")
                 entry_in_transactions_table(user_id, account_number, b_name, b_account_number, amount)
             else:
                 p_balance = get_current_balance(get_user_id_from_acc_no(b_account_number))
@@ -122,6 +124,7 @@ def transfer_money(username, account_number, b_name, b_account_number, amount):
                     mydb.commit()
                 else:
                     print("Transaction Successful")
+                    print(f"{amount} has been debited from your account")
                     entry_in_transactions_table(user_id, account_number, b_name, b_account_number, amount)
 
         else:
@@ -176,28 +179,89 @@ def take_user_information(username):
     user_id = updateDetails.get_user_id(username)
     account_number = get_acc_no_from_user_id(user_id)
 
-    b_name = input("Please enter the name of beneficiary: ")
-    while not registration.checking_name(b_name):
-        print("Please enter a valid name")
+    beneficiaries = beneficiary.list_beneficiaries(username)
+    if len(beneficiaries) != 0:
+        print("Press 1 if you want to transfer money to one of the beneficiary.")
+        print("Press 2 to transfer money to another account: ")
+
+        t = input("Key: ")
+        while not t.isnumeric() or len(t) != 1 or int(t) < 0 or int(t) > 2:
+            print("Please enter a valid key.")
+            t = input("Key: ")
+
+        if int(t) == 2:
+            b_name = input("Please enter the name of beneficiary: ")
+            while not registration.checking_name(b_name):
+                print("Please enter a valid name")
+                b_name = input("Please enter the name of beneficiary: ")
+
+            b_account_number = input("Please enter beneficiary account number: ")
+            while not registration.checks_account_number(b_account_number):
+                print("Please enter a valid account number")
+                b_account_number = input("Please enter beneficiary account number: ")
+
+            amount = input("Please enter the amount: ")
+            while not amount.isnumeric():
+                print("Please enter a valid amount")
+                amount = input("Please enter the amount: ")
+
+            m_pin = input("Please enter you mPIN: ")
+            while not registration.check_mpin(m_pin):
+                print("Please enter a valid mPIN")
+                m_pin = input("Please enter you mPIN: ")
+
+            if authenticate_user(user_id, m_pin):
+                transfer_money(username, account_number, b_name, b_account_number, amount)
+        elif int(t) == 1:
+            for i in range(0, len(beneficiaries)):
+                print(f"Press {i + 1} to transfer money to {beneficiaries[i][0]}")
+
+            t = input("Key: ")
+            while not t.isnumeric() or int(t) < 0 or int(t) > len(beneficiaries):
+                print("Please enter a valid key")
+                t = input("Key: ")
+
+            for i in range(len(beneficiaries)):
+                if int(t) == i + 1:
+                    b_name = beneficiaries[i][0]
+                    b_account_number = beneficiaries[i][1]
+
+                    amount = input("Please enter the amount: ")
+                    while not amount.isnumeric():
+                        print("Please enter a valid amount")
+                        amount = input("Please enter the amount: ")
+
+                    m_pin = input("Please enter you mPIN: ")
+                    while not registration.check_mpin(m_pin):
+                        print("Please enter a valid mPIN")
+                        m_pin = input("Please enter you mPIN: ")
+
+                    if authenticate_user(user_id, m_pin):
+                        transfer_money(username, account_number, b_name, b_account_number, amount)
+
+    else:
         b_name = input("Please enter the name of beneficiary: ")
+        while not registration.checking_name(b_name):
+            print("Please enter a valid name")
+            b_name = input("Please enter the name of beneficiary: ")
 
-    b_account_number = input("Please enter beneficiary account number: ")
-    while not registration.checks_account_number(b_account_number):
-        print("Please enter a valid account number")
         b_account_number = input("Please enter beneficiary account number: ")
+        while not registration.checks_account_number(b_account_number):
+            print("Please enter a valid account number")
+            b_account_number = input("Please enter beneficiary account number: ")
 
-    amount = input("Please enter the amount: ")
-    while not amount.isnumeric():
-        print("Please enter a valid amount")
         amount = input("Please enter the amount: ")
+        while not amount.isnumeric():
+            print("Please enter a valid amount")
+            amount = input("Please enter the amount: ")
 
-    m_pin = input("Please enter you mPIN: ")
-    while not registration.check_mpin(m_pin):
-        print("Please enter a valid mPIN")
         m_pin = input("Please enter you mPIN: ")
+        while not registration.check_mpin(m_pin):
+            print("Please enter a valid mPIN")
+            m_pin = input("Please enter you mPIN: ")
 
-    if authenticate_user(user_id, m_pin):
-        transfer_money(username, account_number, b_name, b_account_number, amount)
+        if authenticate_user(user_id, m_pin):
+            transfer_money(username, account_number, b_name, b_account_number, amount)
 
 
 def close_db():
