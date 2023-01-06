@@ -2,7 +2,6 @@ from random import randint
 import mysql.connector
 from getpass import getpass
 import login
-from pwinput import pwinput
 
 # connecting to sql server
 mydb = mysql.connector.connect(
