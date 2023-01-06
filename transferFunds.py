@@ -143,7 +143,7 @@ def authenticate_user(user_id, pin):
     query = f'''
         SELECT balance, account_number
         FROM balance
-        WHERE user_id = {user_id} and m_pin = {pin}
+        WHERE user_id = {user_id} and CAST(AES_DECRYPT(m_pin, 'pass') AS CHAR) = '{pin}'
     '''
     mycursor.execute(query)
     result = mycursor.fetchall()

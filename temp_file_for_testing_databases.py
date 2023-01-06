@@ -20,7 +20,7 @@ mycursor = mydb.cursor()
 #     )
 # '''
 
-mycursor.execute('select * from users')
+mycursor.execute('select user_id, CAST(AES_DECRYPT(card_cvv, "pass") AS CHAR) from cards')
 result = mycursor.fetchall()
 for i in result:
   print(i)

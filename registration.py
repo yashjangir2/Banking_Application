@@ -108,7 +108,7 @@ def checks_cvv_for_user(username, cvv):
        SELECT username, account_number
        FROM users JOIN cards
        ON users.id = cards.user_id
-       WHERE username = "{username}" AND card_cvv = '{cvv}'
+       WHERE username = "{username}" AND CAST(AES_DECRYPT(card_cvv, 'pass') AS CHAR) = '{cvv}'
     '''
     mycursor.execute(query)
     result = mycursor.fetchall()
@@ -137,7 +137,9 @@ def checks_pin(username, cvv, pin):
        SELECT username, account_number
        FROM users JOIN cards
        ON users.id = cards.user_id
-       WHERE username = "{username}" AND card_cvv = '{cvv}' AND card_pin = '{pin}'
+       WHERE username = "{username}" 
+       AND CAST(AES_DECRYPT(card_cvv, 'pass') AS CHAR) = '{cvv}' 
+       AND CAST(AES_DECRYPT(card_pin, 'pass') AS CHAR) = '{pin}'
     '''
     mycursor.execute(query)
     result = mycursor.fetchall()
@@ -266,7 +268,7 @@ def insert_debit_card_info(user_id, card_cvv, card_pin):
     """
     insertion_query_cards = f'''
         INSERT INTO cards(user_id, card_cvv, card_pin, card_type)
-        VALUES( {user_id}, '{card_cvv}', '{card_pin}', 'debit')
+        VALUES( {user_id}, AES_ENCRYPT('{card_cvv}', 'pass'), AES_ENCRYPT('{card_pin}', 'pass'), 'debit')
     '''
     mycursor.execute(insertion_query_cards)
     mydb.commit()
@@ -278,7 +280,7 @@ def insert_credit_card_info(user_id, card_cvv, card_pin):
     """
     insertion_query_cards = f'''
         INSERT INTO cards(user_id, card_cvv, card_pin, card_type)
-        VALUES( {user_id}, '{card_cvv}', '{card_pin}', 'credit')
+        VALUES( {user_id}, AES_ENCRYPT('{card_cvv}', 'pass'), AES_ENCRYPT('{card_pin}', 'pass'), 'credit')
     '''
     mycursor.execute(insertion_query_cards)
     mydb.commit()
@@ -290,7 +292,7 @@ def insert_balance_info(user_id, account_number, mpin):
     """
     insertion_query_balance = f'''
         INSERT INTO balance(user_id, account_number, m_pin, balance)
-        VALUES({user_id}, "{account_number}", '{mpin}', 0) 
+        VALUES({user_id}, "{account_number}", AES_ENCRYPT('{mpin}', 'pass'), 0) 
     '''
     mycursor.execute(insertion_query_balance)
     mydb.commit()

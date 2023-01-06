@@ -44,8 +44,8 @@ def creating_all_tables():
     create_cards_table = '''
         CREATE TABLE IF NOT EXISTS cards(id INT PRIMARY KEY AUTO_INCREMENT,
             user_id INT,
-            card_cvv VARCHAR(6),
-            card_pin VARCHAR(6),
+            card_cvv blob,
+            card_pin blob,
             card_type ENUM("credit", "debit"),
             FOREIGN KEY(user_id) REFERENCES users(id)
             ON DELETE CASCADE
@@ -58,7 +58,7 @@ def creating_all_tables():
         CREATE TABLE IF NOT EXISTS balance(id INT PRIMARY KEY AUTO_INCREMENT,
             user_id INT,
             account_number VARCHAR(15),
-            m_pin VARCHAR(8),
+            m_pin blob,
             balance INT,
             FOREIGN KEY(user_id) REFERENCES users(id)
             ON DELETE CASCADE
@@ -123,27 +123,27 @@ def random_test_accounts():
 
     insert_cards = '''
         INSERT INTO cards(user_id, card_cvv, card_pin, card_type)
-        VALUES (1, '123', '1234', 'debit'),
-        (1, '999', '1234', 'credit'),
-        (2, '000', '1234', 'debit'),
-        (2, '888', '1234', 'credit'),
-        (3, '777', '1234', 'debit'),
-        (3, '666', '1234', 'credit'),
-        (4, '555', '1234', 'debit'),
-        (4, '444', '1234', 'credit'),
-        (5, '333', '1234', 'debit'),
-        (5, '222', '1234', 'credit')
+        VALUES (1, AES_ENCRYPT('123', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
+        (1, AES_ENCRYPT('999', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
+        (2, AES_ENCRYPT('000', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
+        (2, AES_ENCRYPT('111', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
+        (3, AES_ENCRYPT('222', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
+        (3, AES_ENCRYPT('333', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
+        (4, AES_ENCRYPT('444', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
+        (4, AES_ENCRYPT('555', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
+        (5, AES_ENCRYPT('666', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
+        (5, AES_ENCRYPT('777', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit')
     '''
     mycursor.execute(insert_cards)
     mydb.commit()
 
     insert_balance = '''
             INSERT INTO balance(user_id, account_number, m_pin, balance)
-            VALUES (1, "123456789012", '123456', 100002),
-            (2, "000000000000", '000000', 500002),
-            (3, "111111111111", '111111', 10000),
-            (4, "222222222222", '222222', 99999),
-            (5, "333333333333", '333333', 1000000)
+            VALUES (1, "123456789012", AES_ENCRYPT('123456', 'pass'), 100002),
+            (2, "000000000000", AES_ENCRYPT('000000', 'pass'), 500002),
+            (3, "111111111111", AES_ENCRYPT('111111', 'pass'), 10000),
+            (4, "222222222222", AES_ENCRYPT('222222', 'pass'), 99999),
+            (5, "333333333333", AES_ENCRYPT('333333', 'pass'), 1000000)
         '''
     mycursor.execute(insert_balance)
     mydb.commit()

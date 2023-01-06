@@ -25,7 +25,7 @@ def checking_login_details(username, pin):
         SELECT balance
         FROM balance JOIN users
         ON balance.user_id = users.id
-        WHERE users.username = '{username}' AND m_pin = {pin}
+        WHERE users.username = '{username}' AND CAST(AES_DECRYPT(m_pin, 'pass') AS CHAR) = '{pin}'
     '''
     mycursor.execute(cq_card_cvv)
     result = mycursor.fetchone()
@@ -41,7 +41,9 @@ def list_bank_details(username):
     Returns the list of tuples containing information like username, account_number, mobile number, CVV and card type
     """
     query1 = f'''
-            SELECT username, account_number, mobile_no, card_cvv, card_type
+            SELECT username, account_number, mobile_no, 
+                    CAST(AES_DECRYPT(card_cvv, 'pass') AS CHAR) AS card_cvv, 
+                    CAST(AES_DECRYPT(card_pin, 'pass') AS CHAR) AS card_pin
             FROM users JOIN cards
             ON users.id = cards.user_id
             WHERE username = "{username}"
@@ -56,7 +58,7 @@ def list_card_cvvs(username):
     Returns the list of all card CVVs owned by user.
     """
     query1 = f'''
-        SELECT card_cvv
+        SELECT CAST(AES_DECRYPT(card_cvv, 'pass') AS CHAR)
         FROM users JOIN cards
         ON users.id = cards.user_id
         WHERE username = "{username}"
@@ -89,15 +91,10 @@ def display_details(username):
     mycursor.execute(query2)
     result1 = mycursor.fetchall()
 
-    print(f"Current Balance: {result1[0][0]}")
+    print(f"Current Balance: {result1[0][0]}\n")
 
     beneficiary.print_beneficiaries(username)
-
-    print("\nDetails of your credit and debit cards: ")
-    for i in range(len(cards)):
-        print(f"{i + 1}. {cards[i][-1]} card CVV: {cards[i][-2]}")
-    print("\n")
-
+    print("\n\n")
 
 def update_details(username):
     """
@@ -281,10 +278,10 @@ def change_mpin(username):
     changes the mPIN of the account. Also checks the validation of new mPIN
     """
     print("Changing mPIN")
-    c_mpin = input("Please enter your current mPIN")
+    c_mpin = input("Please enter your current mPIN: ")
     while not registration.check_mpin(c_mpin):
         print("Please enter a valid 6 digit numeric mPIN")
-        c_mpin = input("Please enter your current mPIN")
+        c_mpin = input("Please enter your current mPIN: ")
 
     while not checking_login_details(username, c_mpin):
         print("Wrong mPIN!!!")
