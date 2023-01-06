@@ -1,4 +1,6 @@
 import mysql.connector
+
+import transferFunds
 import updateDetails
 
 mydb = mysql.connector.connect(
@@ -27,18 +29,34 @@ def checks_beneficiary_and_account_no(b_name, b_account_number):
     return True
 
 
+def check_beneficiary_for_user(username, b_name, b_account_number):
+    """
+    Checks if beneficiary is already added by the user or not.
+    Return True if beneficiary present else False.
+    """
+    if (b_name, b_account_number) in list_beneficiaries(username):
+        return True
+    return False
+
+
 def add_beneficiary(username, name, b_account_number):
     """
     Adds beneficiary to the beneficiary table
     """
     user_id = updateDetails.get_user_id(username)
 
-    query = f'''
-        INSERT INTO beneficiary(user_id, username, beneficiary_name, beneficiary_account_number)
-        VALUES ({user_id}, '{username}', '{name}', '{b_account_number}')
-    '''
-    mycursor.execute(query)
-    mydb.commit()
+    if not check_beneficiary_for_user(username, name, b_account_number) \
+            and b_account_number != transferFunds.get_acc_no_from_user_id(user_id):
+        query = f'''
+            INSERT INTO beneficiary(user_id, username, beneficiary_name, beneficiary_account_number)
+            VALUES ({user_id}, '{username}', '{name}', '{b_account_number}')
+        '''
+        mycursor.execute(query)
+        mydb.commit()
+    elif b_account_number == transferFunds.get_acc_no_from_user_id(user_id):
+        print("Cannot add yourself as beneficiary")
+    else:
+        print("Beneficiary already present")
 
 
 def list_beneficiaries(username):

@@ -4,6 +4,7 @@ import beneficiary
 import registration
 import updateDetails
 from datetime import datetime
+from getpass import getpass
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -205,10 +206,10 @@ def take_user_information(username):
                 print("Please enter a valid amount")
                 amount = input("Please enter the amount: ")
 
-            m_pin = input("Please enter you mPIN: ")
+            m_pin = getpass("Please enter you mPIN: ")
             while not registration.check_mpin(m_pin):
                 print("Please enter a valid mPIN")
-                m_pin = input("Please enter you mPIN: ")
+                m_pin = getpass("Please enter you mPIN: ")
 
             if authenticate_user(user_id, m_pin):
                 transfer_money(username, account_number, b_name, b_account_number, amount)
@@ -231,10 +232,10 @@ def take_user_information(username):
                         print("Please enter a valid amount")
                         amount = input("Please enter the amount: ")
 
-                    m_pin = input("Please enter you mPIN: ")
+                    m_pin = getpass("Please enter you mPIN: ")
                     while not registration.check_mpin(m_pin):
                         print("Please enter a valid mPIN")
-                        m_pin = input("Please enter you mPIN: ")
+                        m_pin = getpass("Please enter you mPIN: ")
 
                     if authenticate_user(user_id, m_pin):
                         transfer_money(username, account_number, b_name, b_account_number, amount)

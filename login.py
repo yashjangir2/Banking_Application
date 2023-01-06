@@ -234,7 +234,7 @@ def add_credit_card(username):
 def add_beneficiary_2(username):
     """
     Checks validation of name and account number of the beneficiary
-    Also checks if the beneficiary is present in the database or not
+    Also checks if the beneficiary is present in the database i.e., users table or not
     After all validations insert the beneficiary into beneficiary table using add_beneficiary()
     function in beneficiary file.
     """
@@ -327,6 +327,32 @@ def change_mpin(username):
     login_functions(username)
 
 
+def transaction_details(username):
+    user_id = updateDetails.get_user_id(username)
+    query = f'''
+        SELECT beneficiary_name, beneficiary_account_number, amount, timestamp 
+        FROM transactions
+        WHERE user_id = {user_id}
+    '''
+    mycursor.execute(query)
+    result = mycursor.fetchall()
+    mydb.commit()
+
+    print("Name -- Account number -- amount -- time")
+    for i in result:
+        print(f"{i[0]} -- {i[1]} -- {i[2]} -- {i[3].strftime('%d-%m/%Y %H:%M:%S')}")
+
+    t = input("Press 0 to exit: ")
+    while not t.isnumeric() or len(t) != 1 or t != '0':
+        t = input("Press 0 to exit: ")
+
+    login_functions(username)
+
+
+def cards_details(username):
+    pass
+
+
 def login_functions(username):
     """
     All login features once the user logins
@@ -340,6 +366,8 @@ def login_functions(username):
     print("Press 4 to add a beneficiary")
     print("Press 5 to transfer money")
     print("Press 6 to change you mPIN")
+    print("Press 7 to see your transactions")
+    print("Press 8 to see your cards")
     print("Press 0 to logout")
     t = input("Key: ")
     while not t.isnumeric() or len(t) != 1:
@@ -358,6 +386,10 @@ def login_functions(username):
         transfer_money(username)
     elif t == 6:
         change_mpin(username)
+    elif t == 7:
+        transaction_details(username)
+    elif t == 8:
+        cards_details(username)
     elif t == 0:
         print("Logout Successful!!")
         main.home_page()

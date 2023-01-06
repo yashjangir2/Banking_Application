@@ -123,27 +123,42 @@ def random_test_accounts():
 
     insert_cards = '''
         INSERT INTO cards(user_id, card_cvv, card_pin, card_type)
-        VALUES (1, AES_ENCRYPT('123', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
-        (1, AES_ENCRYPT('999', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
-        (2, AES_ENCRYPT('000', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
-        (2, AES_ENCRYPT('111', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
-        (3, AES_ENCRYPT('222', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
-        (3, AES_ENCRYPT('333', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
-        (4, AES_ENCRYPT('444', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
-        (4, AES_ENCRYPT('555', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
-        (5, AES_ENCRYPT('666', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
-        (5, AES_ENCRYPT('777', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit')
+        VALUES ((SELECT id from users where account_number = '123456789012'),
+                AES_ENCRYPT('123', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
+        ((SELECT id from users where account_number = '123456789012'), 
+                AES_ENCRYPT('999', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
+        ((SELECT id from users where account_number = '000000000000'), 
+                AES_ENCRYPT('000', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
+        ((SELECT id from users where account_number = '000000000000'), 
+                AES_ENCRYPT('111', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
+        ((SELECT id from users where account_number = '111111111111'), 
+                AES_ENCRYPT('222', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
+        ((SELECT id from users where account_number = '111111111111'), 
+                AES_ENCRYPT('333', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
+        ((SELECT id from users where account_number = '222222222222'), 
+                AES_ENCRYPT('444', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
+        ((SELECT id from users where account_number = '222222222222'), 
+                AES_ENCRYPT('555', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit'),
+        ((SELECT id from users where account_number = '333333333333'), 
+                AES_ENCRYPT('666', 'pass'), AES_ENCRYPT('1234', 'pass'), 'debit'),
+        ((SELECT id from users where account_number = '333333333333'), 
+                AES_ENCRYPT('777', 'pass'), AES_ENCRYPT('1234', 'pass'), 'credit')
     '''
     mycursor.execute(insert_cards)
     mydb.commit()
 
     insert_balance = '''
             INSERT INTO balance(user_id, account_number, m_pin, balance)
-            VALUES (1, "123456789012", AES_ENCRYPT('123456', 'pass'), 100002),
-            (2, "000000000000", AES_ENCRYPT('000000', 'pass'), 500002),
-            (3, "111111111111", AES_ENCRYPT('111111', 'pass'), 10000),
-            (4, "222222222222", AES_ENCRYPT('222222', 'pass'), 99999),
-            (5, "333333333333", AES_ENCRYPT('333333', 'pass'), 1000000)
+            VALUES ((SELECT id from users where account_number = '123456789012'), 
+                    "123456789012", AES_ENCRYPT('123456', 'pass'), 100002),
+            ((SELECT id from users where account_number = '000000000000'), 
+                    "000000000000", AES_ENCRYPT('000000', 'pass'), 500002),
+            ((SELECT id from users where account_number = '111111111111'), 
+                    "111111111111", AES_ENCRYPT('111111', 'pass'), 10000),
+            ((SELECT id from users where account_number = '222222222222'), 
+                    "222222222222", AES_ENCRYPT('222222', 'pass'), 99999),
+            ((SELECT id from users where account_number = '333333333333'), 
+                    "333333333333", AES_ENCRYPT('333333', 'pass'), 1000000)
         '''
     mycursor.execute(insert_balance)
     mydb.commit()
