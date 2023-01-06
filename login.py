@@ -79,10 +79,17 @@ def display_details(username):
     Prints the user information corresponding to the username provided.
     Prints list of cards, list of beneficiaries, current balance, and username
     """
-    cards = list_bank_details(username)
+    query = f'''
+        SELECT account_number
+        FROM users
+        WHERE username = '{username}'
+    '''
+    mycursor.execute(query)
+    result = mycursor.fetchone()
+    mydb.commit()
 
-    print(f"Username: {cards[0][0]}")
-    print(f"Account Number: {cards[0][1]}")
+    print(f"Username: {username}")
+    print(f"Account Number: {result[0]}")
 
     query2 = f'''
         SELECT balance
@@ -91,12 +98,14 @@ def display_details(username):
         WHERE username = "{username}"
     '''
     mycursor.execute(query2)
-    result1 = mycursor.fetchall()
+    result1 = mycursor.fetchone()
+    mydb.commit()
 
-    print(f"Current Balance: {result1[0][0]}\n")
+    print(f"Current Balance: {result1[0]}\n")
 
     beneficiary.print_beneficiaries(username)
     print("\n\n")
+
 
 def update_details(username):
     """

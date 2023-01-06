@@ -69,6 +69,7 @@ def print_beneficiaries(username):
     '''
     mycursor.execute(query)
     result = mycursor.fetchall()
+    mydb.commit()
 
     count = 1
     print("List of beneficiaries")
