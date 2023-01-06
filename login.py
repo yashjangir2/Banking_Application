@@ -7,8 +7,6 @@ import registration
 import main
 from getpass import getpass
 
-import main
-
 mydb = mysql.connector.connect(
     host="localhost",
     username="root",
