@@ -8,7 +8,7 @@ import beneficiary
 
 def encryption_pass():
     """
-    Set you encryption and decryption password for PINs
+    Set your encryption and decryption password for PINs
     """
     return 'pass'
 
