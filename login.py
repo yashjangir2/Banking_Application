@@ -5,6 +5,8 @@ import transferFunds
 import updateDetails
 import registration
 
+from getpass import getpass
+
 import main
 
 mydb = mysql.connector.connect(
@@ -159,41 +161,41 @@ def change_pin(username):
     print("You chose to change your pin")
     t = 1
     while t == 1:
-        cvv = input("Please enter the cvv of the card whose Pin you want to change: ")
+        cvv = getpass("Please enter the cvv of the card whose Pin you want to change: ")
         while not registration.checks_cvv(cvv):
             print("Wrong CVV!!")
-            cvv = input("Please enter the cvv of the card whose Pin you want to change: ")
+            cvv = getpass("Please enter the cvv of the card whose Pin you want to change: ")
 
         while cvv not in list_card_cvvs(username):
             print("No such card!!")
-            cvv = input("Please enter the cvv of the card whose Pin you want to change: ")
+            cvv = getpass("Please enter the cvv of the card whose Pin you want to change: ")
             while not registration.checks_cvv(cvv):
                 print("Wrong CVV!!")
-                cvv = input("Please enter the cvv of the card whose Pin you want to change: ")
+                cvv = getpass("Please enter the cvv of the card whose Pin you want to change: ")
 
-        pin = input("Please enter the pin of your card: ")
+        pin = getpass("Please enter the pin of your card: ")
         while not registration.checks_valid_pin(pin):
             print("Please enter a valid 4 digit numeric pin")
-            pin = input("Please enter the pin of your card: ")
+            pin = getpass("Please enter the pin of your card: ")
         while not registration.checks_pin(username, cvv, pin):
             print("Wrong pin!!")
-            pin = input("Please enter the pin of your card: ")
+            pin = getpass("Please enter the pin of your card: ")
             while not registration.checks_valid_pin(pin):
                 print("Please enter a valid 4 digit numeric pin")
-                pin = input("Please enter the pin of your card: ")
+                pin = getpass("Please enter the pin of your card: ")
 
-        new_pin1 = input("Please enter new 4 digit pin: ")
+        new_pin1 = getpass("Please enter new 4 digit pin: ")
         while not registration.checks_valid_pin(new_pin1):
             print("Please enter a valid 4 digit pin")
-            new_pin1 = input("Please enter new 4 digit pin: ")
-        confirm_pin = input("Please re-enter your new pin: ")
+            new_pin1 = getpass("Please enter new 4 digit pin: ")
+        confirm_pin = getpass("Please re-enter your new pin: ")
         while confirm_pin != new_pin1:
             print("Pin didn't match!!")
-            new_pin1 = input("Please enter new 4 digit pin: ")
+            new_pin1 = getpass("Please enter new 4 digit pin: ")
             while not registration.checks_valid_pin(new_pin1):
                 print("Please enter a valid 4 digit pin")
-                new_pin1 = input("Please enter new 4 digit pin: ")
-            confirm_pin = input("Please re-enter your new pin: ")
+                new_pin1 = getpass("Please enter new 4 digit pin: ")
+            confirm_pin = getpass("Please re-enter your new pin: ")
         if new_pin1 == confirm_pin:
             updateDetails.change_pin(username, cvv, pin, new_pin1)
             print("PIN changed!!")
@@ -204,10 +206,10 @@ def change_pin(username):
 
 def add_credit_card(username):
     print("Adding new Credit Card")
-    pin = input("Please Enter the pin of your new credit card: ")
+    pin = getpass("Please Enter the pin of your new credit card: ")
     while not registration.checks_valid_pin(pin):
         print("Please enter a valid 4 digit numeric pin")
-        pin = input("Please enter the pin of your card: ")
+        pin = getpass("Please enter the pin of your card: ")
 
     cvv = updateDetails.add_new_credit_card(username, pin)
     print("New credit card added")
@@ -278,32 +280,32 @@ def change_mpin(username):
     changes the mPIN of the account. Also checks the validation of new mPIN
     """
     print("Changing mPIN")
-    c_mpin = input("Please enter your current mPIN: ")
+    c_mpin = getpass("Please enter your current mPIN: ")
     while not registration.check_mpin(c_mpin):
         print("Please enter a valid 6 digit numeric mPIN")
-        c_mpin = input("Please enter your current mPIN: ")
+        c_mpin = getpass("Please enter your current mPIN: ")
 
     while not checking_login_details(username, c_mpin):
         print("Wrong mPIN!!!")
-        c_mpin = input("Please enter your current mPIN: ")
+        c_mpin = getpass("Please enter your current mPIN: ")
         while not registration.check_mpin(c_mpin):
             print("Please enter a valid 6 digit numeric mPIN")
-            c_mpin = input("Please enter your current mPIN: ")
+            c_mpin = getpass("Please enter your current mPIN: ")
 
-    new_mpin = input("Please enter your new mPIN: ")
+    new_mpin = getpass("Please enter your new mPIN: ")
     while not registration.check_mpin(new_mpin):
         print("Please enter a valid 6 digit numeric mPIN")
-        new_mpin = input("Please enter your new mPIN: ")
+        new_mpin = getpass("Please enter your new mPIN: ")
 
-    confirm_mpin = input("Please re-enter your new mPIN: ")
+    confirm_mpin = getpass("Please re-enter your new mPIN: ")
     while confirm_mpin != new_mpin:
         print("PIN didn't match!!!")
-        new_mpin = input("Please enter your new mPIN: ")
+        new_mpin = getpass("Please enter your new mPIN: ")
         while not registration.check_mpin(new_mpin):
             print("Please enter a valid 6 digit numeric mPIN")
-            new_mpin = input("Please enter your new mPIN: ")
+            new_mpin = getpass("Please enter your new mPIN: ")
 
-        confirm_mpin = input("Please re-enter your new mPIN: ")
+        confirm_mpin = getpass("Please re-enter your new mPIN: ")
 
     if confirm_mpin == new_mpin:
         updateDetails.change_mpin(username, new_mpin)
@@ -364,10 +366,10 @@ def login_menu():
         print("Please enter a valid username containing only alphabets and '_'")
         username = input("Please enter your username: ")
 
-    mpin = input("Please enter your mPIN: ")
+    mpin = getpass("Please enter your mPIN: ")
     while not registration.check_mpin(mpin):
         print("Please Enter a valid 6 digit numeric mPIN")
-        mpin = input("Please enter your mPIN: ")
+        mpin = getpass("Please enter your mPIN: ")
 
     r = checking_login_details(username, mpin)
     while not r:
@@ -377,10 +379,10 @@ def login_menu():
             print("Please enter a valid username containing only alphabets and '_'")
             username = input("Please enter your username: ")
 
-        mpin = input("Please enter your mPIN: ")
+        mpin = getpass("Please enter your mPIN: ")
         while not registration.check_mpin(mpin):
             print("Please Enter a valid 6 digit numeric mPIN")
-            mpin = input("Please enter your mPIN: ")
+            mpin = getpass("Please enter your mPIN: ")
 
         r = checking_login_details(username, mpin)
 

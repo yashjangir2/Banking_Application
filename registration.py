@@ -1,7 +1,8 @@
 from random import randint
 import mysql.connector
-
+from getpass import getpass
 import login
+from pwinput import pwinput
 
 # connecting to sql server
 mydb = mysql.connector.connect(
@@ -205,10 +206,10 @@ def registration_form():
         print("Please enter a valid 10 digit Mobile Number")
         mobile_no = input("Please enter your mobile number without any spaces or any characters: ")
 
-    mpin = input("Please set a 6 digit mPIN for your account: ")
+    mpin = getpass("Please set a 6 digit mPIN for your account: ")
     while not check_mpin(mpin):
         print("Please enter a valid 6 digit numeric mPIN")
-        mpin = input("Please set a 6 digit mPIN for your account: ")
+        mpin = getpass("Please set a 6 digit mPIN for your account: ")
 
     return {'name': name,
             'username': username,
