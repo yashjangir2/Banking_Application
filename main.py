@@ -6,6 +6,13 @@ import transferFunds
 import beneficiary
 
 
+def encryption_pass():
+    """
+    Set you encryption and decryption password for PINs
+    """
+    return 'pass'
+
+
 def home_page():
     """
     Options for login, register or exit.

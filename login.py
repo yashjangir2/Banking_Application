@@ -4,7 +4,7 @@ import beneficiary
 import transferFunds
 import updateDetails
 import registration
-
+import main
 from getpass import getpass
 
 import main
@@ -17,7 +17,6 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
-
 def checking_login_details(username, pin):
     """
     checks the login credentials entered are valid or not.
@@ -27,7 +26,7 @@ def checking_login_details(username, pin):
         SELECT balance
         FROM balance JOIN users
         ON balance.user_id = users.id
-        WHERE users.username = '{username}' AND CAST(AES_DECRYPT(m_pin, 'pass') AS CHAR) = '{pin}'
+        WHERE users.username = '{username}' AND CAST(AES_DECRYPT(m_pin, '{main.encryption_pass()}') AS CHAR) = '{pin}'
     '''
     mycursor.execute(cq_card_cvv)
     result = mycursor.fetchone()
@@ -45,8 +44,8 @@ def list_bank_details(username):
     """
     query1 = f'''
             SELECT username, account_number, mobile_no, 
-                    CAST(AES_DECRYPT(card_cvv, 'pass') AS CHAR) AS card_cvv, 
-                    CAST(AES_DECRYPT(card_pin, 'pass') AS CHAR) AS card_pin,
+                    CAST(AES_DECRYPT(card_cvv, '{main.encryption_pass()}') AS CHAR) AS card_cvv, 
+                    CAST(AES_DECRYPT(card_pin, '{main.encryption_pass()}') AS CHAR) AS card_pin,
                     card_type
             FROM users JOIN cards
             ON users.id = cards.user_id
@@ -62,7 +61,7 @@ def list_card_cvvs(username):
     Returns the list of all card CVVs owned by user.
     """
     query1 = f'''
-        SELECT CAST(AES_DECRYPT(card_cvv, 'pass') AS CHAR)
+        SELECT CAST(AES_DECRYPT(card_cvv, '{main.encryption_pass()}') AS CHAR)
         FROM users JOIN cards
         ON users.id = cards.user_id
         WHERE username = "{username}"
@@ -377,7 +376,7 @@ def cards_details(username):
     user_id = updateDetails.get_user_id(username)
 
     query = f'''
-        SELECT CAST(AES_DECRYPT(card_cvv, 'pass') AS CHAR)
+        SELECT CAST(AES_DECRYPT(card_cvv, '{main.encryption_pass()}') AS CHAR)
         FROM cards
         WHERE user_id = {user_id} AND card_type = 'debit'
     '''

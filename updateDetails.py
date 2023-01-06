@@ -1,6 +1,6 @@
 import mysql.connector
 import registration
-
+import main
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -85,10 +85,10 @@ def change_pin(username, cvv, pin, new_pin):
 
     query = f'''
         UPDATE cards
-        SET card_pin = AES_ENCRYPT('{new_pin}', 'pass')
+        SET card_pin = AES_ENCRYPT('{new_pin}', '{main.encryption_pass()}')
         WHERE user_id = {user_id} 
-        AND CAST(AES_DECRYPT(card_cvv, 'pass') AS CHAR) = '{cvv}' 
-        AND CAST(AES_DECRYPT(card_pin, 'pass') AS CHAR) = '{pin}'
+        AND CAST(AES_DECRYPT(card_cvv, '{main.encryption_pass()}') AS CHAR) = '{cvv}' 
+        AND CAST(AES_DECRYPT(card_pin, '{main.encryption_pass()}') AS CHAR) = '{pin}'
     '''
     mycursor.execute(query)
     mydb.commit()
@@ -104,7 +104,8 @@ def add_new_credit_card(username, pin):
 
         query = f'''
             INSERT INTO cards(user_id, card_cvv, card_pin, card_type)
-            VALUES ({user_id}, AES_ENCRYPT('{new_card_details[0]}', 'pass'), AES_ENCRYPT('{pin}', 'pass'), 'credit')
+            VALUES ({user_id}, AES_ENCRYPT('{new_card_details[0]}', '{main.encryption_pass()}'), 
+                    AES_ENCRYPT('{pin}', '{main.encryption_pass()}'), 'credit')
         '''
         mycursor.execute(query)
         mydb.commit()
@@ -122,7 +123,7 @@ def change_mpin(username, new_mpin):
     user_id = get_user_id(username)
     query = f'''
         UPDATE balance
-        SET m_pin = AES_ENCRYPT('{new_mpin}', 'pass')
+        SET m_pin = AES_ENCRYPT('{new_mpin}', '{main.encryption_pass()}')
         WHERE user_id = {user_id}
     '''
     mycursor.execute(query)
