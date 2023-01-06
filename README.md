@@ -83,6 +83,7 @@ Description of functions and files are given below:
     function in beneficiary file.
      - ***transfer_money(username)*** :- Transfer money to another account using take_user_information(username) function from transferFunds.py.
      - ***change_mpin(username)*** :- Takes current mPIN and new mPIN from user and checks their validation and changes the mPIN and updates in the database using change_mpin(username, new_mpin) function in updateDetails.py.
+     - ***transaction_details(username)*** :- Displays transaction details of the user.
      - ***login_functions(username)*** :- Asks user to which action to perform by taking input after he/she logs in.
      - ***login_menu()*** :- Takes username and mPIN from users to log in into the account if all information provided are correct. Also checks the validation of information entered.
 - #### updateDetails.py
@@ -104,4 +105,10 @@ Description of functions and files are given below:
  
      - ***get_user_id_from_acc_no(account_number)***:-  Return user id of the account number given.
      - ***get_acc_no_from_user_id(user_id)*** :- Return account number using user id.
-     - ******
+     - ***get_current_balance(user_id)*** :- Returns current balance of user.
+     - ***update_balance_for_user(user_id, amount)*** :- Updates the current balance of user once transaction is made.
+     - ***update_balance_for_beneficiary(b_account_number, amount)*** :- Updates the balance of beneficiary.
+     - ***transfer_money(username, account_number, b_name, b_account_number, amount)*** :- Checks the transactions i.e., if any transactions fails make sure that the current balance of users is not affected.
+     - ***authenticate_user(user_id, pin)*** :- checks the mPIN of user.
+     - ***entry_in_transactions_table(user_id, account_number,  b_name, b_account_number, amount)*** :- Inserts information in transaction table.
+     - ***take_user_information(username)*** :- Takes information from user to transfer money and checks the validation of information provided.

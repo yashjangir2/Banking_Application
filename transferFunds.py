@@ -45,7 +45,7 @@ def get_acc_no_from_user_id(user_id):
 
 def get_current_balance(user_id):
     """
-    Returns current balance od user
+    Returns current balance of user
     """
     query = f'''
         SELECT balance
