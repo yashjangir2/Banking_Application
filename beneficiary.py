@@ -53,10 +53,13 @@ def add_beneficiary(username, name, b_account_number):
         '''
         mycursor.execute(query)
         mydb.commit()
+        return True
     elif b_account_number == transferFunds.get_acc_no_from_user_id(user_id):
         print("Cannot add yourself as beneficiary")
+        return False
     else:
         print("Beneficiary already present")
+        return False
 
 
 def list_beneficiaries(username):
@@ -89,11 +92,12 @@ def print_beneficiaries(username):
     result = mycursor.fetchall()
     mydb.commit()
 
-    count = 1
-    print("List of beneficiaries")
-    for i in result:
-        print(f"{count}. {i[-2]}: {i[-1]}")
-        count += 1
+    if len(result) > 0:
+        count = 1
+        print("List of beneficiaries")
+        for i in result:
+            print(f"{count}. {i[-2]}: {i[-1]}")
+            count += 1
 
 
 def close_db():

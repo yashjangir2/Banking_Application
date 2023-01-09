@@ -113,4 +113,5 @@ Description of functions and files are given below:
      - ***transfer_money(username, account_number, b_name, b_account_number, amount)*** :- Checks the transactions i.e., if any transactions fails make sure that the current balance of users is not affected.
      - ***authenticate_user(user_id, pin)*** :- checks the mPIN of user.
      - ***entry_in_transactions_table(user_id, account_number,  b_name, b_account_number, amount)*** :- Inserts information in transaction table.
-     - ***take_user_information(username)*** :- Takes information from user to transfer money and checks the validation of information provided.
+     - ***take_user_information(username)*** :- Takes information from user to transfer money and checks the validation of information provided. User have to select between 1 and 2. if user selects one we don't ask for account number and
+    if user press 2 we will ask user account number and name whom the funds is to be transferred.

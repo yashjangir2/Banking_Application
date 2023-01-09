@@ -101,10 +101,10 @@ def display_details(username):
     result1 = mycursor.fetchone()
     mydb.commit()
 
-    print(f"Current Balance: {result1[0]}\n")
+    print(f"Current Balance: {result1[0]}")
 
     beneficiary.print_beneficiaries(username)
-    print("\n\n")
+    print("\n")
 
 
 def update_details(username):
@@ -271,9 +271,10 @@ def add_beneficiary_2(username):
             print("Invalid Account Number")
             b_account_number = input("Please enter beneficiary account number: ")
 
-    beneficiary.add_beneficiary(username, b_name, b_account_number)
-    print("Beneficiary Added")
-    beneficiary.print_beneficiaries(username)
+    x = beneficiary.add_beneficiary(username, b_name, b_account_number)
+    if x:
+        print("Beneficiary Added")
+        beneficiary.print_beneficiaries(username)
 
     t = input("Press 0 to exit: ")
     while not t.isnumeric() or len(t) != 1 or t != '0':
