@@ -303,6 +303,9 @@ def take_user_information(username):
 
 
 def get_sent_transaction_details(username):
+    """
+    Returns the transaction details of money, user sent
+    """
     user_id = updateDetails.get_user_id(username)
     query = f'''
             SELECT beneficiary_name, beneficiary_account_number, amount, timestamp 
@@ -317,6 +320,9 @@ def get_sent_transaction_details(username):
 
 
 def get_received_transaction_details(account_number):
+    """
+    Returns the transaction details of money, user received
+    """
     query1 = f'''
         SELECT user_id, account_number, amount, timestamp
         FROM transactions

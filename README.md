@@ -116,3 +116,5 @@ Description of functions and files are given below:
      - ***entry_in_transactions_table(user_id, account_number,  b_name, b_account_number, amount)*** :- Inserts information in transaction table.
      - ***take_user_information(username)*** :- Takes information from user to transfer money and checks the validation of information provided. User have to select between 1 and 2. if user selects one we don't ask for account number and
     if user press 2 we will ask user account number and name whom the funds is to be transferred.
+     - ***get_sent_transaction_details(username)*** :- Returns the transaction details of money, user sent.
+     - ***get_received_transaction_details(account_number)*** :- Returns the transaction details of money, user received.
