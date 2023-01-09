@@ -1,17 +1,20 @@
 import mysql.connector
-import main
 
-try:
-    mydb = mysql.connector.connect(
-      host="localhost",
-      user="root",
-      password="1234"
-    )
-    mycursor = mydb.cursor()
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="1234"
+)
+mycursor = mydb.cursor()
 
-    mycursor.execute("CREATE DATABASE IF NOT EXISTS bank_info")
-except:
-    print("Something went wrong!!")
+mycursor.execute("CREATE DATABASE IF NOT EXISTS bank_info")
+
+
+def encryption_pass():
+    """
+    Set your encryption and decryption password for PINs
+    """
+    return 'pass'
 
 
 def creating_all_tables():
@@ -125,25 +128,35 @@ def random_test_accounts():
     insert_cards = f'''
         INSERT INTO cards(user_id, card_cvv, card_pin, card_type)
         VALUES ((SELECT id from users where account_number = '123456789012'),
-                AES_ENCRYPT('123', '{main.encryption_pass()}'), AES_ENCRYPT('1234', '{main.encryption_pass()}'), 'debit'),
+                AES_ENCRYPT('123', '{encryption_pass()}'), 
+                AES_ENCRYPT('1234', '{encryption_pass()}'), 'debit'),
         ((SELECT id from users where account_number = '123456789012'), 
-                AES_ENCRYPT('999', '{main.encryption_pass()}'), AES_ENCRYPT('1234', '{main.encryption_pass()}'), 'credit'),
+                AES_ENCRYPT('999', '{encryption_pass()}'), 
+                AES_ENCRYPT('1234', '{encryption_pass()}'), 'credit'),
         ((SELECT id from users where account_number = '000000000000'), 
-                AES_ENCRYPT('000', '{main.encryption_pass()}'), AES_ENCRYPT('1234', '{main.encryption_pass()}'), 'debit'),
+                AES_ENCRYPT('000', '{encryption_pass()}'), 
+                AES_ENCRYPT('1234', '{encryption_pass()}'), 'debit'),
         ((SELECT id from users where account_number = '000000000000'), 
-                AES_ENCRYPT('111', '{main.encryption_pass()}'), AES_ENCRYPT('1234', '{main.encryption_pass()}'), 'credit'),
+                AES_ENCRYPT('111', '{encryption_pass()}'), 
+                AES_ENCRYPT('1234', '{encryption_pass()}'), 'credit'),
         ((SELECT id from users where account_number = '111111111111'), 
-                AES_ENCRYPT('222', '{main.encryption_pass()}'), AES_ENCRYPT('1234', '{main.encryption_pass()}'), 'debit'),
+                AES_ENCRYPT('222', '{encryption_pass()}'), 
+                AES_ENCRYPT('1234', '{encryption_pass()}'), 'debit'),
         ((SELECT id from users where account_number = '111111111111'), 
-                AES_ENCRYPT('333', '{main.encryption_pass()}'), AES_ENCRYPT('1234', '{main.encryption_pass()}'), 'credit'),
+                AES_ENCRYPT('333', '{encryption_pass()}'), 
+                AES_ENCRYPT('1234', '{encryption_pass()}'), 'credit'),
         ((SELECT id from users where account_number = '222222222222'), 
-                AES_ENCRYPT('444', '{main.encryption_pass()}'), AES_ENCRYPT('1234', '{main.encryption_pass()}'), 'debit'),
+                AES_ENCRYPT('444', '{encryption_pass()}'), 
+                AES_ENCRYPT('1234', '{encryption_pass()}'), 'debit'),
         ((SELECT id from users where account_number = '222222222222'), 
-                AES_ENCRYPT('555', '{main.encryption_pass()}'), AES_ENCRYPT('1234', '{main.encryption_pass()}'), 'credit'),
+                AES_ENCRYPT('555', '{encryption_pass()}'), 
+                AES_ENCRYPT('1234', '{encryption_pass()}'), 'credit'),
         ((SELECT id from users where account_number = '333333333333'), 
-                AES_ENCRYPT('666', '{main.encryption_pass()}'), AES_ENCRYPT('1234', '{main.encryption_pass()}'), 'debit'),
+                AES_ENCRYPT('666', '{encryption_pass()}'), 
+                AES_ENCRYPT('1234', '{encryption_pass()}'), 'debit'),
         ((SELECT id from users where account_number = '333333333333'), 
-                AES_ENCRYPT('777', '{main.encryption_pass()}'), AES_ENCRYPT('1234', '{main.encryption_pass()}'), 'credit')
+                AES_ENCRYPT('777', '{encryption_pass()}'), 
+                AES_ENCRYPT('1234', '{encryption_pass()}'), 'credit')
     '''
     mycursor.execute(insert_cards)
     mydb.commit()
@@ -151,15 +164,15 @@ def random_test_accounts():
     insert_balance = f'''
             INSERT INTO balance(user_id, account_number, m_pin, balance)
             VALUES ((SELECT id from users where account_number = '123456789012'), 
-                    "123456789012", AES_ENCRYPT('123456', '{main.encryption_pass()}'), 100002),
+                    "123456789012", AES_ENCRYPT('123456', '{encryption_pass()}'), 100002),
             ((SELECT id from users where account_number = '000000000000'), 
-                    "000000000000", AES_ENCRYPT('000000', '{main.encryption_pass()}'), 500002),
+                    "000000000000", AES_ENCRYPT('000000', '{encryption_pass()}'), 500002),
             ((SELECT id from users where account_number = '111111111111'), 
-                    "111111111111", AES_ENCRYPT('111111', '{main.encryption_pass()}'), 10000),
+                    "111111111111", AES_ENCRYPT('111111', '{encryption_pass()}'), 10000),
             ((SELECT id from users where account_number = '222222222222'), 
-                    "222222222222", AES_ENCRYPT('222222', '{main.encryption_pass()}'), 99999),
+                    "222222222222", AES_ENCRYPT('222222', '{encryption_pass()}'), 99999),
             ((SELECT id from users where account_number = '333333333333'), 
-                    "333333333333", AES_ENCRYPT('333333', '{main.encryption_pass()}'), 1000000)
+                    "333333333333", AES_ENCRYPT('333333', '{encryption_pass()}'), 1000000)
         '''
     mycursor.execute(insert_balance)
     mydb.commit()

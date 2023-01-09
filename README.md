@@ -44,11 +44,11 @@ Description of functions and files are given below:
     This file creates the database once we run the application.
   - ***creating_all_tables()*** :- Creates all the tables required in the database.
   - ***random_test_accounts()*** :- Adds some test entries in the database.
+  - ***encryption_pass()*** :- Sets password for encryption and decryption of PINs.
 - #### main.py
     
   - ***home_page()*** :- Start of the application. User will be asked to login, register or exit.
                            Also closes all the mySQL servers once user exit the application.
-  - ***encryption_pass()*** :- Sets password for encryption and decryption of PINs
   
 - #### registration.py
      - ***checking_name(name)*** :- Takes name of the user as input and checks the validation of name. Name should contain only alphabets and length of name should be less than 100 characters.

@@ -1,5 +1,5 @@
 import mysql.connector
-import main
+import creatingDB
 import beneficiary
 import registration
 import updateDetails
@@ -26,6 +26,7 @@ def get_user_id_from_acc_no(account_number):
     '''
     mycursor.execute(query)
     result = mycursor.fetchone()
+    mydb.commit()
     return result[0]
 
 
@@ -40,6 +41,7 @@ def get_acc_no_from_user_id(user_id):
     '''
     mycursor.execute(query)
     result = mycursor.fetchone()
+    mydb.commit()
     return result[0]
 
 
@@ -54,6 +56,7 @@ def get_current_balance(user_id):
     '''
     mycursor.execute(query)
     ans = mycursor.fetchone()
+    mydb.commit()
 
     return ans[0]
 
@@ -147,7 +150,7 @@ def authenticate_user(user_id, pin):
     query = f'''
         SELECT balance, account_number
         FROM balance
-        WHERE user_id = {user_id} and CAST(AES_DECRYPT(m_pin, '{main.encryption_pass()}') AS CHAR) = '{pin}'
+        WHERE user_id = {user_id} and CAST(AES_DECRYPT(m_pin, '{creatingDB.encryption_pass()}') AS CHAR) = '{pin}'
     '''
     mycursor.execute(query)
     result = mycursor.fetchall()

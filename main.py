@@ -1,16 +1,9 @@
 import creatingDB
-import login
 import registration
+import login
 import updateDetails
 import transferFunds
 import beneficiary
-
-
-def encryption_pass():
-    """
-    Set your encryption and decryption password for PINs
-    """
-    return 'pass'
 
 
 def home_page():

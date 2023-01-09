@@ -1,8 +1,8 @@
 from random import randint
 import mysql.connector
 from getpass import getpass
+from creatingDB import encryption_pass
 import login
-import main
 
 # connecting to sql server
 mydb = mysql.connector.connect(
@@ -109,7 +109,7 @@ def checks_cvv_for_user(username, cvv):
        SELECT username, account_number
        FROM users JOIN cards
        ON users.id = cards.user_id
-       WHERE username = "{username}" AND CAST(AES_DECRYPT(card_cvv, '{main.encryption_pass()}') AS CHAR) = '{cvv}'
+       WHERE username = "{username}" AND CAST(AES_DECRYPT(card_cvv, '{encryption_pass()}') AS CHAR) = '{cvv}'
     '''
     mycursor.execute(query)
     result = mycursor.fetchall()
@@ -139,8 +139,8 @@ def checks_pin(username, cvv, pin):
        FROM users JOIN cards
        ON users.id = cards.user_id
        WHERE username = "{username}" 
-       AND CAST(AES_DECRYPT(card_cvv, '{main.encryption_pass()}') AS CHAR) = '{cvv}' 
-       AND CAST(AES_DECRYPT(card_pin, '{main.encryption_pass()}') AS CHAR) = '{pin}'
+       AND CAST(AES_DECRYPT(card_cvv, '{encryption_pass()}') AS CHAR) = '{cvv}' 
+       AND CAST(AES_DECRYPT(card_pin, '{encryption_pass()}') AS CHAR) = '{pin}'
     '''
     mycursor.execute(query)
     result = mycursor.fetchall()
@@ -304,8 +304,8 @@ def insert_debit_card_info(user_id, card_cvv, card_pin):
     """
     insertion_query_cards = f'''
         INSERT INTO cards(user_id, card_cvv, card_pin, card_type)
-        VALUES( {user_id}, AES_ENCRYPT('{card_cvv}', '{main.encryption_pass()}'), 
-                AES_ENCRYPT('{card_pin}', '{main.encryption_pass()}'), 'debit')
+        VALUES( {user_id}, AES_ENCRYPT('{card_cvv}', '{encryption_pass()}'), 
+                AES_ENCRYPT('{card_pin}', '{encryption_pass()}'), 'debit')
     '''
     mycursor.execute(insertion_query_cards)
     mydb.commit()
@@ -317,8 +317,8 @@ def insert_credit_card_info(user_id, card_cvv, card_pin):
     """
     insertion_query_cards = f'''
         INSERT INTO cards(user_id, card_cvv, card_pin, card_type)
-        VALUES( {user_id}, AES_ENCRYPT('{card_cvv}', '{main.encryption_pass()}'), 
-                AES_ENCRYPT('{card_pin}', '{main.encryption_pass()}'), 'credit')
+        VALUES( {user_id}, AES_ENCRYPT('{card_cvv}', '{encryption_pass()}'), 
+                AES_ENCRYPT('{card_pin}', '{encryption_pass()}'), 'credit')
     '''
     mycursor.execute(insertion_query_cards)
     mydb.commit()
@@ -330,7 +330,7 @@ def insert_balance_info(user_id, account_number, mpin):
     """
     insertion_query_balance = f'''
         INSERT INTO balance(user_id, account_number, m_pin, balance)
-        VALUES({user_id}, "{account_number}", AES_ENCRYPT('{mpin}', '{main.encryption_pass()}'), 0) 
+        VALUES({user_id}, "{account_number}", AES_ENCRYPT('{mpin}', '{encryption_pass()}'), 0) 
     '''
     mycursor.execute(insertion_query_balance)
     mydb.commit()
