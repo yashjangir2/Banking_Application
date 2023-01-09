@@ -343,18 +343,23 @@ def transaction_details(username):
     Displays the transaction details of user
     """
     user_id = updateDetails.get_user_id(username)
-    query = f'''
-        SELECT beneficiary_name, beneficiary_account_number, amount, timestamp 
-        FROM transactions
-        WHERE user_id = {user_id}
-    '''
-    mycursor.execute(query)
-    result = mycursor.fetchall()
-    mydb.commit()
+    account_number = transferFunds.get_acc_no_from_user_id(user_id)
+    sent_result = transferFunds.get_sent_transaction_details(username)
 
+    print("SENT")
     print("Name -- Account number -- amount -- time")
-    for i in result:
+    for i in sent_result:
         print(f"{i[0]} -- {i[1]} -- {i[2]} -- {i[3].strftime('%d-%m/%Y %H:%M:%S')}")
+
+    received_result = transferFunds.get_received_transaction_details(account_number)
+
+    print("\nRECEIVED")
+    print("Name -- Account number -- amount -- time")
+    if received_result != 0:
+        name = received_result[0]
+        result = received_result[1]
+        for i in result:
+            print(f"{name} -- {i[1]} -- {i[2]} -- {i[3].strftime('%d-%m/%Y %H:%M:%S')}")
 
     t = input("Press 0 to exit: ")
     while not t.isnumeric() or len(t) != 1 or t != '0':

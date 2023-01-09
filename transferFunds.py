@@ -302,6 +302,44 @@ def take_user_information(username):
                 transfer_money(username, account_number, b_name, b_account_number, amount)
 
 
+def get_sent_transaction_details(username):
+    user_id = updateDetails.get_user_id(username)
+    query = f'''
+            SELECT beneficiary_name, beneficiary_account_number, amount, timestamp 
+            FROM transactions
+            WHERE user_id = {user_id}
+        '''
+    mycursor.execute(query)
+    result = mycursor.fetchall()
+    mydb.commit()
+
+    return result
+
+
+def get_received_transaction_details(account_number):
+    query1 = f'''
+        SELECT user_id, account_number, amount, timestamp
+        FROM transactions
+        WHERE beneficiary_account_number = {account_number}
+    '''
+    mycursor.execute(query1)
+    result = mycursor.fetchall()
+    mydb.commit()
+
+    if len(result) > 0:
+        query2 = f'''
+            SELECT name
+            FROM users
+            WHERE id = {result[0][0]}
+        '''
+        mycursor.execute(query2)
+        name = mycursor.fetchone()
+        mydb.commit()
+
+        return [name[0], result]
+    return 0
+
+
 def close_db():
     mycursor.close()
     mydb.close()
