@@ -29,6 +29,7 @@ pip3 install mysql-connector-python
 ## Usage
 Before starting the application connect to your mySQL server in every file.
 In creatingDB.py file please connect to server in creating_all_tables() and random_test_accounts() functions to connect to the database once it is created.
+You can also set you encryption and decryption password in creatingDB file in encryption_pass() function by changing its return value. 
 
 Run main.py file from the code base to start the application.
 
